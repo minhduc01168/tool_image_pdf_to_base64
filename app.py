@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+from st_copy_to_clipboard import st_copy_to_clipboard
 
 st.set_page_config(
     page_title="Image/PDF to Base64 Converter",
@@ -42,7 +43,12 @@ if uploaded_files:
         else:
             final_string = base64_string
             
-        st.code(final_string, language="text")
+        # 1. Hiển thị xem trước 100 ký tự (nhẹ, không lag)
+        st.caption("Preview (100 characters):")
+        st.code(final_string[:100] + "...", language="text")
+        # 2. Tạo nút Copy đặc biệt
+        # Nút này giữ chuỗi final_string trong biến nhưng không in ra màn hình
+        st_copy_to_clipboard(final_string, "📋 Copy Full Base64 String")
         st.caption(f"Total Length: {len(final_string)} characters")
         
         col1, col2 = st.columns([1, 1])
