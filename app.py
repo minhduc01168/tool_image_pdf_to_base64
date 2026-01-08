@@ -44,8 +44,13 @@ if uploaded_files:
             final_string = base64_string
             
         # 1. Hiển thị xem trước 100 ký tự (nhẹ, không lag)
-        st.caption("Preview (100 characters):")
-        st.code(final_string[:100] + "...", language="text")
+        st.text_area(
+            label="Preview (100 characters):", 
+            value=final_string[:100] + "...", 
+            height=100, 
+            disabled=True,
+            key=f"preview_{file_name}" 
+        )
         # 2. Tạo nút Copy đặc biệt
         # Nút này giữ chuỗi final_string trong biến nhưng không in ra màn hình
         st_copy_to_clipboard(final_string, "📋 Copy Full Base64 String")
